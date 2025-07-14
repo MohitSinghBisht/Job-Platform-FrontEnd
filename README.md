@@ -1,102 +1,110 @@
-# Job Hunting Platform
+# 💼 Job Hunting Platform
 
-A comprehensive job hunting platform built with Spring Boot and Angular, featuring role-based access for Recruiters and Job Seekers.
+A full-featured job hunting platform built using **Spring Boot** and **Angular**, designed to serve both **Job Seekers** and **Recruiters** with a smooth and secure experience.
 
-## Project Structure
+---
 
-The project is organized into two main parts:
-- `backend`: Spring Boot application
-- `frontend`: Angular application
+## 🧱 Project Structure
 
-## Features
+```
+job-hunting-platform/
+├── backend/   → Spring Boot (Java 17)
+└── frontend/  → Angular 17
+```
 
-### For Job Seekers
-- Create and manage professional profiles
-- Search and apply for jobs
+---
+
+## ✨ Features
+
+### 👤 For Job Seekers
+- Create & manage professional profiles
+- Search & apply for jobs
 - Track application status
-- Receive notifications about application updates
+- Receive job-related notifications
 - Save favorite jobs
-- Add education, experience, and skills
+- Add education, experience & skills
 
-### For Recruiters
+### 🧑‍💼 For Recruiters
 - Create company profiles
-- Post and manage job listings
+- Post & manage job listings
 - Review applications
 - Contact candidates
 - Track hiring pipeline
 
-## Technologies Used
+---
 
-### Backend
+## 🚀 Technologies Used
+
+### 🔙 Backend
 - Java 17
 - Spring Boot 3.2.0
-- Spring Security with JWT Authentication
+- Spring Security + JWT
 - Spring Data JPA
-- H2 Database (for development)
-- MySQL/PostgreSQL (for production)
+- H2 (dev), MySQL/PostgreSQL (prod)
 - Maven
 
-### Frontend
+### 🔜 Frontend
 - Angular 17
+- TypeScript + RxJS
 - Bootstrap 5
-- TypeScript
-- RxJS
 
-## Getting Started
+---
 
-### Prerequisites
-- Java 17 or higher
-- Node.js 16 or higher
-- npm 8 or higher
-- Maven 3.6 or higher
+## 🛠️ Getting Started
 
-### Backend Setup
-1. Navigate to the backend directory:
-   ```
-   cd backend
-   ```
-2. Build the project:
-   ```
-   mvn clean install
-   ```
-3. Run the application:
-   ```
-   mvn spring-boot:run
-   ```
-The backend server will start on http://localhost:8080.
+### ✅ Prerequisites
+- Java 17+
+- Node.js 16+
+- npm 8+
+- Maven 3.6+
 
-### Frontend Setup
-1. Navigate to the frontend directory:
-   ```
-   cd frontend
-   ```
-2. Install dependencies:
-   ```
-   npm install
-   ```
-3. Start the development server:
-   ```
-   npm start
-   ```
-The frontend application will be available at http://localhost:4200.
+---
 
-## API Documentation
+### 🔧 Backend Setup
 
-The backend provides RESTful APIs secured with JWT authentication:
+```bash
+cd backend
+mvn clean install
+mvn spring-boot:run
+```
+➡️ Runs on `http://localhost:8080`
 
-- Authentication endpoints: `/api/auth/`
-- Job listings: `/api/jobs/`
-- User profiles: `/api/profile/`
-- Applications: Managed through jobs
-- Notifications: `/api/notifications/`
+---
 
-## Security
+### 🎨 Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm start
+```
+➡️ Runs on `http://localhost:4200`
+
+---
+
+## 📡 API Endpoints (secured with JWT)
+
+| Feature         | Endpoint Prefix        |
+|-----------------|------------------------|
+| Auth            | `/api/auth/`           |
+| Jobs            | `/api/jobs/`           |
+| Profiles        | `/api/profile/`        |
+| Notifications   | `/api/notifications/`  |
+
+---
+
+## 🔐 Security Highlights
 
 - Role-based access control
-- JWT token authentication
-- Password encryption
-- Protected API endpoints
+- JWT authentication
+- Encrypted passwords
+- Protected REST endpoints
 
-## License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📄 License
+
+Licensed under the **MIT License**.  
+See the [LICENSE](./LICENSE) file for full details.
+
+---
