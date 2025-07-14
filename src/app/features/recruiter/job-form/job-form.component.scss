@@ -1,0 +1,31 @@
+.card-header {
+  font-weight: 600;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.skill-item, .benefit-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+.skill-badge, .benefit-badge {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.btn-remove {
+  color: #dc3545;
+  background: none;
+  border: none;
+  padding: 0 0 0 8px;
+  font-size: 16px;
+  cursor: pointer;
+}

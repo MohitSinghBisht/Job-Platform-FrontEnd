@@ -1,0 +1,178 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">{{ isEditMode ? 'Edit Job' : 'Post New Job' }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-danger" *ngIf="error">
+            {{ error }}
+          </div>
+          
+          <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="title" class="form-label">Job Title *</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="title" 
+                formControlName="title"
+                placeholder="e.g. Senior Software Engineer">
+              <div *ngIf="submitted && f['title'].errors" class="text-danger small">
+                <div *ngIf="f['title'].errors['required']">Job title is required</div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="company" class="form-label">Company Name *</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="company" 
+                formControlName="company"
+                placeholder="e.g. Acme Inc.">
+              <div *ngIf="submitted && f['company'].errors" class="text-danger small">
+                <div *ngIf="f['company'].errors['required']">Company name is required</div>
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="location" class="form-label">Location *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="location" 
+                  formControlName="location"
+                  placeholder="e.g. New York, NY">
+                <div *ngIf="submitted && f['location'].errors" class="text-danger small">
+                  <div *ngIf="f['location'].errors['required']">Location is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check mt-4">
+                  <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="remote" 
+                    formControlName="remote">
+                  <label class="form-check-label" for="remote">
+                    Remote work available
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="jobType" class="form-label">Job Type *</label>
+                <select 
+                  class="form-select" 
+                  id="jobType" 
+                  formControlName="jobType">
+                  <option value="" disabled>Select Job Type</option>
+                  <option value="FULL_TIME">Full Time</option>
+                  <option value="PART_TIME">Part Time</option>
+                  <option value="CONTRACT">Contract</option>
+                  <option value="FREELANCE">Freelance</option>
+                  <option value="INTERNSHIP">Internship</option>
+                </select>
+                <div *ngIf="submitted && f['jobType'].errors" class="text-danger small">
+                  <div *ngIf="f['jobType'].errors['required']">Job type is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="experience" class="form-label">Experience Level</label>
+                <select 
+                  class="form-select" 
+                  id="experience" 
+                  formControlName="experience">
+                  <option value="" disabled>Select Experience Level</option>
+                  <option value="ENTRY">Entry Level</option>
+                  <option value="MID">Mid Level</option>
+                  <option value="SENIOR">Senior Level</option>
+                  <option value="EXECUTIVE">Executive Level</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="salary" class="form-label">Salary Range</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="salary" 
+                formControlName="salary"
+                placeholder="e.g. $80,000 - $100,000 per year">
+            </div>
+            
+            <div class="mb-3">
+              <label for="description" class="form-label">Job Description *</label>
+              <textarea 
+                class="form-control" 
+                id="description" 
+                formControlName="description"
+                rows="8"
+                placeholder="Provide a detailed job description including responsibilities, requirements, benefits, etc."></textarea>
+              <div *ngIf="submitted && f['description'].errors" class="text-danger small">
+                <div *ngIf="f['description'].errors['required']">Job description is required</div>
+                <div *ngIf="f['description'].errors['minlength']">Job description must be at least 50 characters</div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Required Skills *</label>
+              <div class="d-flex align-items-center mb-2">
+                <input 
+                  type="text" 
+                  class="form-control me-2" 
+                  [(ngModel)]="newSkill" 
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="e.g. JavaScript">
+                <button 
+                  type="button" 
+                  class="btn btn-outline-primary" 
+                  (click)="addSkill()">
+                  Add
+                </button>
+              </div>
+              <div class="d-flex flex-wrap gap-2 mb-2">
+                <div *ngFor="let skill of skillsArray.controls; let i = index" class="badge bg-primary d-flex align-items-center">
+                  {{ skill.value }}
+                  <button 
+                    type="button" 
+                    class="btn-close btn-close-white ms-2" 
+                    (click)="removeSkill(i)">
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="submitted && skillsArray.errors" class="text-danger small">
+                <div *ngIf="skillsArray.errors['required']">At least one skill is required</div>
+              </div>
+            </div>
+            
+            <div class="form-check mb-3">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="active" 
+                formControlName="active">
+              <label class="form-check-label" for="active">
+                Publish job immediately
+              </label>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <a routerLink="/recruiter" class="btn btn-outline-secondary">Cancel</a>
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isEditMode ? 'Update Job' : 'Post Job' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

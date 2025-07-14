@@ -1,0 +1,114 @@
+<div class="container mt-4">
+  <h1>Job Seeker Dashboard</h1>
+  
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- User Profile Summary -->
+  <div *ngIf="user" class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">Profile Summary</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="h6">Name</h3>
+          <p>{{ user.firstName }} {{ user.lastName }}</p>
+          
+          <h3 class="h6">Email</h3>
+          <p>{{ user.email }}</p>
+        </div>
+        <div class="col-md-6">
+          <h3 class="h6">Phone</h3>
+          <p>{{ user.phoneNumber || 'Not provided' }}</p>
+          
+          <h3 class="h6">Location</h3>
+          <p>{{ user.location || 'Not provided' }}</p>
+        </div>
+      </div>
+      <div class="text-end">
+        <a [routerLink]="['/profile']" class="btn btn-outline-primary btn-sm">Edit Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Applications -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">My Applications ({{ applications.length }})</h2>
+    </div>
+    <div class="card-body">
+      <div *ngIf="applications.length === 0 && !loading" class="text-center my-4">
+        <p>You haven't applied to any jobs yet.</p>
+        <a [routerLink]="['/jobs']" class="btn btn-primary">Browse Jobs</a>
+      </div>
+
+      <div *ngFor="let app of applications" class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h3 class="h5">
+                <a [routerLink]="['/jobs', app.job.id]">{{ app.job.title }}</a>
+              </h3>
+              <p class="mb-1">{{ app.job.company }}</p>
+              <p class="text-muted small">Applied on: {{ app.applicationDate | date }}</p>
+              <span class="badge" [ngClass]="{
+                'bg-success': app.status === ApplicationStatus.OFFERED,
+                'bg-danger': app.status === ApplicationStatus.REJECTED,
+                'bg-warning': app.status === ApplicationStatus.APPLIED
+              }">{{ app.status }}</span>
+            </div>
+            <button *ngIf="app.status === ApplicationStatus.APPLIED" 
+                    (click)="withdrawApplication(app.id)" 
+                    class="btn btn-outline-danger btn-sm">
+              Withdraw
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saved Jobs -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">Saved Jobs ({{ savedJobs.length }})</h2>
+    </div>
+    <div class="card-body">
+      <div *ngIf="savedJobs.length === 0 && !loading" class="text-center my-4">
+        <p>You haven't saved any jobs yet.</p>
+        <a [routerLink]="['/jobs']" class="btn btn-primary">Browse Jobs</a>
+      </div>
+
+      <div *ngFor="let job of savedJobs" class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h3 class="h5">
+                <a [routerLink]="['/jobs', job.id]">{{ job.title }}</a>
+              </h3>
+              <p class="mb-1">{{ job.company }}</p>
+              <p class="text-muted small">Location: {{ job.location }}</p>
+              <p class="text-muted small">Posted on: {{ job.createdAt | date }}</p>
+            </div>
+            <div>
+              <button (click)="unsaveJob(job.id)" class="btn btn-outline-danger btn-sm mb-2">
+                Unsave
+              </button>
+              <a [routerLink]="['/jobs', job.id, 'apply']" class="btn btn-primary btn-sm d-block">
+                Apply
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
